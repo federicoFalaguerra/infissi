@@ -1,0 +1,10 @@
+---
+const { image, title } = Astro.props;
+---
+
+<figure class="relative w-3/12 shadow-lg rounded-2xl">
+    <img src={image} alt={title} class="card object-cover rounded-2xl w-full" />
+    <figcaption class="absolute bottom-0 left-0 w-full backdrop-blur bg-white/80 text-3xl font-semibold p-5 text-center rounded-br-2xl rounded-bl-2xl text-[#141414]">
+       {title}
+    </figcaption>
+</figure>

@@ -1,5 +1,6 @@
 ---
 import google from '../assets/google.svg?url';
+import Bullets from '../components/Bullets.astro';
 ---
 
 <section class="flex items-center justify-center">
@@ -11,7 +12,8 @@ import google from '../assets/google.svg?url';
             <button class="btn btn-secondary ml-1.5">Guarda i prodotti</button>
         </div>
         <div class="flex items-center justify-center mt-6">
-            <img src={google} alt="Google" class="w-32" /><span class="text-[16px text-gray-500 font-display ml-2">4,9</span>
+            <img src={google} alt="Google" class="w-32" /><span class="text-[16px text-gray-500 font-display ml-2">4,9</span><span class="text-[16px text-gray-500 font-display ml-4">1.200 Recensioni</span>
         </div>
+        <Bullets></Bullets>
     </div>
 </section>
