@@ -1,0 +1,15 @@
+---
+import Button from '../components/ui/Buttons.astro';
+import Logo from '../assets/logo.svg?url'
+
+const { citta } = Astro.params;
+import LandingData from '../data/LandingData.js';
+
+const dati = LandingData[citta];
+
+---
+
+<header class="p-5 flex justify-between items-center">
+    <img src={Logo} alt="Logo" class="logo w-[240px]" />
+    <button class="btn btn-primary">Calcola Preventivo Gratuito</button>
+</header>
