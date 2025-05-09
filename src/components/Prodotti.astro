@@ -1,19 +1,26 @@
 ---
 import Card from '../components/ui/Card.astro';
 
-import pvc from '../assets/prodotti/pvc.jpg';
+import PVC from '../assets/prodotti/pvc.jpg?url';
+import Tende from '../assets/prodotti/tende-veranda.jpg?url';
+import Pergole from '../assets/prodotti/pergole.jpg?url';
+import Zanzariere from '../assets/prodotti/zanzariera.jpg?url';
+import PorteBlindate from '../assets/prodotti/porte-blindate.jpg?url';
+import Vepa from '../assets/prodotti/vepa.jpg?url';
+
+
 ---
 
 <section class="flex items-center justify-center mt-16">
     <div class="container">
         <h2 class="text-6xl font-bold text-[#141414] text-center">I prodotti <br><span class="text-[#D7212E]">infissi & infissi</span></h2>
         <div class="products flex justify-center gap-x-4 mt-10 flex-wrap gap-y-4">
-            <Card image='/assets/prodotti/pvc.jpg' title="Infissi in PVC"></Card>
-            <Card image='/assets/prodotti/tende-veranda.jpg' title="Tende"></Card>
-            <Card image='/assets/prodotti/pergole.jpg' title="Pergole"></Card>
-            <Card image='/assets/prodotti/zanzariera.jpg' title="Zanzariere"></Card>
-            <Card image='/assets/prodotti/porte-blindate.jpg' title="Porte blindate"></Card>
-            <Card image='/assets/prodotti/vepa.jpg' title="VEPA"></Card>
+            <Card image={PVC} title="Infissi in PVC"></Card>
+            <Card image={Tende} title="Tende"></Card>
+            <Card image={Pergole} title="Pergole"></Card>
+            <Card image={Zanzariere} title="Zanzariere"></Card>
+            <Card image={PorteBlindate} title="Porte blindate"></Card>
+            <Card image={Vepa} title="VEPA"></Card>
         </div>
     </div>
 </section>
