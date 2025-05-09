@@ -4,6 +4,7 @@ import Open from '../components/Open.astro';
 import Prodotti from '../components/Prodotti.astro';
 import ChiSiamo from '../components/Chi-siamo.astro';
 import Step from '../components/Step.astro';
+import "../styles/global.css";
 
 
 
@@ -11,6 +12,8 @@ const { citta } = Astro.params;
 import LandingData from '../data/LandingData.js';
 
 const dati = LandingData[citta];
+
+
 ---
 
 <!doctype html>
@@ -19,7 +22,6 @@ const dati = LandingData[citta];
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="stylesheet" href="/src/styles/global.css" />
 		<meta name="generator" content={Astro.generator} />
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
