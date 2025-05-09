@@ -1,0 +1,30 @@
+name: 🚀 Deploy su SiteGround
+
+on:
+  push:
+    branches:
+      - main  # Cambia se usi un altro branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout del codice
+        uses: actions/checkout@v3
+
+      - name: 🛠️ Installazione dipendenze
+        run: npm ci
+
+      - name: 🔨 Build del progetto
+        run: npm run build
+
+      - name: 🚀 Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          cleanup: true  # Rimuove i file vecchi dal server
+
