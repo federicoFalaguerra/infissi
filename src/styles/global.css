@@ -19,3 +19,7 @@
 .btn-secondary {
   @apply bg-white text-[#D7212E]  hover:bg-gray-100;
 }
+
+.btn-big {
+  @apply font-display font-semibold py-4 px-8 rounded-[8px] shadow-md transition-colors duration-300 text-xl;
+}
