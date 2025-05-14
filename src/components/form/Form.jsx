@@ -1,9 +1,28 @@
 import React, { useState } from 'react';
 import Step1 from './steps/Step1.jsx';
+
+// INFISSI
 import Stepinfissi2 from './steps/infissi/Step2.jsx';
 import Stepinfissi3 from './steps/infissi/Step3.jsx';
 import Stepinfissi4 from './steps/infissi/Step4.jsx';
 import Stepinfissi5 from './steps/infissi/Step5.jsx';
+import Stepinfissi6 from './steps/infissi/Step6.jsx';
+import Stepinfissi7 from './steps/infissi/Step7.jsx';
+
+// TENDA VERANDA 
+import Stepveranda2 from './steps/tendeVeranda/Step2.jsx';
+import Stepveranda3 from './steps/tendeVeranda/Step3.jsx';
+import Stepveranda4 from './steps/tendeVeranda/Step4.jsx';
+import Stepveranda5 from './steps/tendeVeranda/Step5.jsx';
+
+// TENDE DA SOLE
+import Steptende2 from './steps/tendeSole/Step2.jsx';
+
+
+
+
+
+
 
 
 
@@ -16,7 +35,9 @@ export default function Form() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const stepMap = {
-    infissi: [Stepinfissi2, Stepinfissi3, Stepinfissi4, Stepinfissi5],
+    infissi: [Stepinfissi2, Stepinfissi3, Stepinfissi4, Stepinfissi5, Stepinfissi6, Stepinfissi7],
+    'tenda-veranda': [Stepveranda2, Stepveranda3, Stepveranda4, Stepveranda5],
+    tende: [Steptende2],
     // altre categorie...
   };
 
