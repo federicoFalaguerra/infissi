@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import Step1 from './steps/Step1.jsx';
-import Stepinfissi1 from './steps/infissi/Step2.jsx';
+import Stepinfissi2 from './steps/infissi/Step2.jsx';
+import Stepinfissi3 from './steps/infissi/Step3.jsx';
+import Stepinfissi4 from './steps/infissi/Step4.jsx';
+import Stepinfissi5 from './steps/infissi/Step5.jsx';
+
+
+
 import StepFinal from './steps/contact/Stepfinal.jsx';
 
 export default function Form() {
@@ -10,7 +16,7 @@ export default function Form() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const stepMap = {
-    infissi: [Stepinfissi1],
+    infissi: [Stepinfissi2, Stepinfissi3, Stepinfissi4, Stepinfissi5],
     // altre categorie...
   };
 
