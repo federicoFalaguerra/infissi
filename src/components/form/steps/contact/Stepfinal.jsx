@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReCAPTCHA from "react-google-recaptcha";
 
-const SITE_KEY = "6LeDOjsrAAAAAJUL3f7_qmAojJE7jVagDZ43W5Dh"; // ← sostituisci con la tua chiave site key
+const SITE_KEY = "6LeDOjsrAAAAAJUL3f7_qmAojJE7jVagDZ43W5Dh";
 
 export default function StepFinal({ formData, onSubmit, onBack }) {
   const recaptchaRef = useRef(null);
@@ -13,6 +13,9 @@ export default function StepFinal({ formData, onSubmit, onBack }) {
   });
   
   const [captchaToken, setCaptchaToken] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [successMsg, setSuccessMsg] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     setLocalData(prev => ({
@@ -24,23 +27,29 @@ export default function StepFinal({ formData, onSubmit, onBack }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setLocalData(prev => ({ ...prev, [name]: value }));
+    setErrorMsg(null);  // reset error on change
   };
 
-  // Questo viene chiamato quando l'utente clicca e completa il captcha
   const handleCaptchaChange = (token) => {
     setCaptchaToken(token);
+    setErrorMsg(null); // reset error on captcha success
   };
 
   const handleClick = async () => {
+    setErrorMsg(null);
+    setSuccessMsg(null);
+
     if (!localData.nome || !localData.cognome || !localData.email) {
-      alert("Compila tutti i campi.");
+      setErrorMsg("Per favore, compila tutti i campi.");
       return;
     }
 
     if (!captchaToken) {
-      alert("Per favore, conferma di non essere un robot.");
+      setErrorMsg("Per favore, conferma di non essere un robot.");
       return;
     }
+
+    setIsSubmitting(true);
 
     const finalData = { ...localData, 'g-recaptcha-response': captchaToken };
 
@@ -56,19 +65,21 @@ export default function StepFinal({ formData, onSubmit, onBack }) {
       const result = await response.json();
 
       if (result.success) {
+        setSuccessMsg("Modulo inviato con successo!");
         if (onSubmit && typeof onSubmit === 'function') {
-          onSubmit(localData); // cambia stato a isSubmitted nel componente padre
+          onSubmit(localData);
         }
-        // reset captcha dopo invio corretto
         recaptchaRef.current.reset();
         setCaptchaToken(null);
       } else {
-        alert("Errore nell'invio del modulo, riprova più tardi.");
+        setErrorMsg(result.message || "Errore nell'invio del modulo, riprova più tardi.");
       }
     } catch (error) {
-      alert("Errore di rete, controlla la connessione.");
+      setErrorMsg("Errore di rete, controlla la connessione.");
       console.error(error);
     }
+
+    setIsSubmitting(false);
   };
 
   return (
@@ -95,9 +106,14 @@ export default function StepFinal({ formData, onSubmit, onBack }) {
         />
       </div>
 
+      {errorMsg && <div style={{ color: 'red', marginTop: '1rem' }}>{errorMsg}</div>}
+      {successMsg && <div style={{ color: 'green', marginTop: '1rem' }}>{successMsg}</div>}
+
       <div style={{ marginTop: '1rem' }}>
-        <button type="button" onClick={onBack}>Indietro</button>
-        <button type="button" onClick={handleClick} style={{ marginLeft: '1rem' }}>Invia</button>
+        <button type="button" onClick={onBack} disabled={isSubmitting}>Indietro</button>
+        <button type="button" onClick={handleClick} style={{ marginLeft: '1rem' }} disabled={isSubmitting}>
+          {isSubmitting ? "Invio in corso..." : "Invia"}
+        </button>
       </div>
     </div>
   );
