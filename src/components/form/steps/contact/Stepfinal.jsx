@@ -1,6 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import ReCAPTCHA from "react-google-recaptcha";
+
+const SITE_KEY = "6LdfGTsrAAAAAM58PQ5HZ0GejseGgFpKeEU2kGup"; // ← sostituisci con la tua chiave site key
+
 
 export default function StepFinal({ formData, onSubmit, onBack }) {
+  const recaptchaRef = useRef(null);
+
   const [localData, setLocalData] = useState({
     nome: '',
     cognome: '',
@@ -20,6 +26,15 @@ export default function StepFinal({ formData, onSubmit, onBack }) {
   };
 
   const handleClick = async () => {
+    const recaptchaValue = await recaptchaRef.current.executeAsync();
+    recaptchaRef.current.reset();
+
+    const finalData = { ...localData, 'g-recaptcha-response': recaptchaValue };
+
+    if (onSubmit && typeof onSubmit === 'function') {
+      onSubmit(finalData);
+    }
+
     if (!localData.nome || !localData.cognome || !localData.email) {
       alert("Compila tutti i campi.");
       return;
@@ -33,22 +48,24 @@ export default function StepFinal({ formData, onSubmit, onBack }) {
         },
         body: JSON.stringify({
           ...formData,
-          ...localData
+          ...localData,
+          'g-recaptcha-response': recaptchaValue
+
         })
       });
   
       const result = await response.json();
   
       if (result.success) {
-        alert("Email inviata con successo!");
+        //alert("Email inviata con successo!");
         if (onSubmit && typeof onSubmit === 'function') {
           onSubmit(localData); // cambia stato a isSubmitted nel componente padre
         }
       } else {
-        alert("Errore: " + (result.message || "Invio fallito."));
+        //alert("Errore: " + (result.message || "Invio fallito."));
       }
     } catch (error) {
-      alert("Si è verificato un errore: " + error.message);
+      //alert("Si è verificato un errore: " + error.message);
       console.error(error);
     }
   };
@@ -74,6 +91,11 @@ export default function StepFinal({ formData, onSubmit, onBack }) {
         <button type="button" onClick={onBack}>Indietro</button>
         <button type="button" onClick={handleClick} style={{ marginLeft: '1rem' }}>Invia</button>
       </div>
+      <ReCAPTCHA
+          sitekey={SITE_KEY}
+          size="invisible"
+          ref={recaptchaRef}
+        />
     </div>
   );
 }
