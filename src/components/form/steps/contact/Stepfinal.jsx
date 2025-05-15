@@ -3,7 +3,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 
 const SITE_KEY = "6LeDOjsrAAAAAJUL3f7_qmAojJE7jVagDZ43W5Dh"; // sostituisci con la tua chiave site key
 
-export default function StepFinal({ formData, onSubmit, onBack }) {
+export default function StepFinal({ formData, onSubmit, onBack, setIsSubmitted }) {
   const recaptchaRef = useRef(null);
 
   const [localData, setLocalData] = useState({
@@ -13,7 +13,6 @@ export default function StepFinal({ formData, onSubmit, onBack }) {
   });
 
   const [captchaToken, setCaptchaToken] = useState(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -63,11 +62,17 @@ export default function StepFinal({ formData, onSubmit, onBack }) {
       console.log("Risposta da send.php:", result);
 
       if (result.success) {
-        setIsSubmitted(true);
         recaptchaRef.current.reset();
         setCaptchaToken(null);
+        
+        // Notifica il genitore che l'invio è avvenuto con successo
         if (onSubmit && typeof onSubmit === 'function') {
           onSubmit(localData);
+        }
+        
+        // Aggiorna lo stato nel componente genitore (se la prop esiste)
+        if (setIsSubmitted && typeof setIsSubmitted === 'function') {
+          setIsSubmitted(true);
         }
       } else {
         setErrorMsg(result.message || "Errore nell'invio del modulo, riprova più tardi.");
@@ -82,49 +87,42 @@ export default function StepFinal({ formData, onSubmit, onBack }) {
 
   return (
     <div>
-      {isSubmitted ? (
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-green-600">Grazie per aver inviato il modulo!</h2>
-          <p className="mt-4">Ti ricontatteremo al più presto.</p>
+      <form onSubmit={(e) => e.preventDefault()}>
+        <h2>Inserisci i tuoi dati</h2>
+        <div>
+          <label>Nome:</label>
+          <input name="nome" value={localData.nome} onChange={handleChange} required />
         </div>
-      ) : (
-        <form onSubmit={(e) => e.preventDefault()}>
-          <h2>Inserisci i tuoi dati</h2>
-          <div>
-            <label>Nome:</label>
-            <input name="nome" value={localData.nome} onChange={handleChange} required />
-          </div>
-          <div>
-            <label>Cognome:</label>
-            <input name="cognome" value={localData.cognome} onChange={handleChange} required />
-          </div>
-          <div>
-            <label>Email:</label>
-            <input name="email" type="email" value={localData.email} onChange={handleChange} required />
-          </div>
+        <div>
+          <label>Cognome:</label>
+          <input name="cognome" value={localData.cognome} onChange={handleChange} required />
+        </div>
+        <div>
+          <label>Email:</label>
+          <input name="email" type="email" value={localData.email} onChange={handleChange} required />
+        </div>
 
-          <div style={{ marginTop: '1rem' }}>
-            <ReCAPTCHA
-              sitekey={SITE_KEY}
-              onChange={handleCaptchaChange}
-              ref={recaptchaRef}
-            />
-          </div>
+        <div style={{ marginTop: '1rem' }}>
+          <ReCAPTCHA
+            sitekey={SITE_KEY}
+            onChange={handleCaptchaChange}
+            ref={recaptchaRef}
+          />
+        </div>
 
-          {errorMsg && (
-            <div style={{ color: 'red', marginTop: '1rem' }}>
-              {errorMsg}
-            </div>
-          )}
-
-          <div style={{ marginTop: '1rem' }}>
-            <button type="button" onClick={onBack} disabled={isSubmitting}>Indietro</button>
-            <button type="button" onClick={handleClick} disabled={isSubmitting} style={{ marginLeft: '1rem' }}>
-              {isSubmitting ? "Invio in corso..." : "Invia"}
-            </button>
+        {errorMsg && (
+          <div style={{ color: 'red', marginTop: '1rem' }}>
+            {errorMsg}
           </div>
-        </form>
-      )}
+        )}
+
+        <div style={{ marginTop: '1rem' }}>
+          <button type="button" onClick={onBack} disabled={isSubmitting}>Indietro</button>
+          <button type="button" onClick={handleClick} disabled={isSubmitting} style={{ marginLeft: '1rem' }}>
+            {isSubmitting ? "Invio in corso..." : "Invia"}
+          </button>
+        </div>
+      </form>
     </div>
   );
 }
