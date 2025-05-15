@@ -35,6 +35,7 @@ export default function StepFinal({ formData, onSubmit, onBack }) {
   };
 
   const handleClick = async () => {
+    
     setErrorMsg(null);
 
     if (!localData.nome || !localData.cognome || !localData.email) {
@@ -59,6 +60,7 @@ export default function StepFinal({ formData, onSubmit, onBack }) {
       });
 
       const result = await response.json();
+      console.log("Risposta da send.php:", result);
 
       if (result.success) {
         setIsSubmitted(true);
