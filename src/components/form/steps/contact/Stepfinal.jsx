@@ -1,18 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
-import ReCAPTCHA from "react-google-recaptcha";
-
-const SITE_KEY = "6LeDOjsrAAAAAJUL3f7_qmAojJE7jVagDZ43W5Dh"; // sostituisci con la tua chiave site key
+import React, { useState, useEffect } from 'react';
 
 export default function StepFinal({ formData, onSubmit, onBack, setIsSubmitted }) {
-  const recaptchaRef = useRef(null);
-
   const [localData, setLocalData] = useState({
     nome: '',
     cognome: '',
-    email: ''
+    email: '',
+    // Campo honeypot - i bot lo compileranno, gli umani no
+    website: ''
   });
 
-  const [captchaToken, setCaptchaToken] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -28,13 +24,7 @@ export default function StepFinal({ formData, onSubmit, onBack, setIsSubmitted }
     setLocalData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleCaptchaChange = (token) => {
-    setCaptchaToken(token);
-    setErrorMsg(null);
-  };
-
   const handleClick = async () => {
-    
     setErrorMsg(null);
 
     if (!localData.nome || !localData.cognome || !localData.email) {
@@ -42,35 +32,38 @@ export default function StepFinal({ formData, onSubmit, onBack, setIsSubmitted }
       return;
     }
 
-    if (!captchaToken) {
-      setErrorMsg("Per favore, conferma di non essere un robot.");
+    // Verifica honeypot - se il campo website è stato compilato, è probabilmente un bot
+    if (localData.website) {
+      // Fingiamo che l'invio sia andato a buon fine ma in realtà non inviamo nulla
+      console.log("Honeypot attivato, probabile bot");
+      if (onSubmit && typeof onSubmit === 'function') {
+        onSubmit(localData);
+      }
+      if (setIsSubmitted && typeof setIsSubmitted === 'function') {
+        setIsSubmitted(true);
+      }
       return;
     }
 
     setIsSubmitting(true);
 
-    const finalData = { ...localData, 'g-recaptcha-response': captchaToken };
-
     try {
       const response = await fetch("https://landing.infissieinfissi.it/api/send.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(finalData)
+        body: JSON.stringify(localData)
       });
 
       const result = await response.json();
       console.log("Risposta da send.php:", result);
 
       if (result.success) {
-        recaptchaRef.current.reset();
-        setCaptchaToken(null);
-        
         // Notifica il genitore che l'invio è avvenuto con successo
         if (onSubmit && typeof onSubmit === 'function') {
           onSubmit(localData);
         }
         
-        // Aggiorna lo stato nel componente genitore (se la prop esiste)
+        // Aggiorna lo stato nel componente genitore
         if (setIsSubmitted && typeof setIsSubmitted === 'function') {
           setIsSubmitted(true);
         }
@@ -101,12 +94,16 @@ export default function StepFinal({ formData, onSubmit, onBack, setIsSubmitted }
           <label>Email:</label>
           <input name="email" type="email" value={localData.email} onChange={handleChange} required />
         </div>
-
-        <div style={{ marginTop: '1rem' }}>
-          <ReCAPTCHA
-            sitekey={SITE_KEY}
-            onChange={handleCaptchaChange}
-            ref={recaptchaRef}
+        
+        {/* Campo honeypot nascosto con CSS */}
+        <div style={{ position: 'absolute', left: '-5000px', ariaHidden: 'true' }}>
+          <label>Website (non compilare questo campo):</label>
+          <input 
+            name="website" 
+            tabIndex="-1" 
+            value={localData.website} 
+            onChange={handleChange} 
+            autoComplete="off" 
           />
         </div>
 
