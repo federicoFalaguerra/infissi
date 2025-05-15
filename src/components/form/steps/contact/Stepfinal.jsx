@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReCAPTCHA from "react-google-recaptcha";
 
-const SITE_KEY = "6LdfGTsrAAAAAM58PQ5HZ0GejseGgFpKeEU2kGup"; // ← sostituisci con la tua chiave site key
-
+const SITE_KEY = "6LeDOjsrAAAAAJUL3f7_qmAojJE7jVagDZ43W5Dh"; // ← sostituisci con la tua chiave site key
 
 export default function StepFinal({ formData, onSubmit, onBack }) {
   const recaptchaRef = useRef(null);
@@ -12,6 +11,8 @@ export default function StepFinal({ formData, onSubmit, onBack }) {
     cognome: '',
     email: ''
   });
+  
+  const [captchaToken, setCaptchaToken] = useState(null);
 
   useEffect(() => {
     setLocalData(prev => ({
@@ -25,51 +26,50 @@ export default function StepFinal({ formData, onSubmit, onBack }) {
     setLocalData(prev => ({ ...prev, [name]: value }));
   };
 
+  // Questo viene chiamato quando l'utente clicca e completa il captcha
+  const handleCaptchaChange = (token) => {
+    setCaptchaToken(token);
+  };
+
   const handleClick = async () => {
-    const recaptchaValue = await recaptchaRef.current.executeAsync();
-    recaptchaRef.current.reset();
-
-    const finalData = { ...localData, 'g-recaptcha-response': recaptchaValue };
-
-    if (onSubmit && typeof onSubmit === 'function') {
-      onSubmit(finalData);
-    }
-
     if (!localData.nome || !localData.cognome || !localData.email) {
       alert("Compila tutti i campi.");
       return;
     }
-  
+
+    if (!captchaToken) {
+      alert("Per favore, conferma di non essere un robot.");
+      return;
+    }
+
+    const finalData = { ...localData, 'g-recaptcha-response': captchaToken };
+
     try {
       const response = await fetch("https://landing.infissieinfissi.it/api/send.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          ...formData,
-          ...localData,
-          'g-recaptcha-response': recaptchaValue
-
-        })
+        body: JSON.stringify(finalData)
       });
-  
+
       const result = await response.json();
-  
+
       if (result.success) {
-        //alert("Email inviata con successo!");
         if (onSubmit && typeof onSubmit === 'function') {
           onSubmit(localData); // cambia stato a isSubmitted nel componente padre
         }
+        // reset captcha dopo invio corretto
+        recaptchaRef.current.reset();
+        setCaptchaToken(null);
       } else {
-        //alert("Errore: " + (result.message || "Invio fallito."));
+        alert("Errore nell'invio del modulo, riprova più tardi.");
       }
     } catch (error) {
-      //alert("Si è verificato un errore: " + error.message);
+      alert("Errore di rete, controlla la connessione.");
       console.error(error);
     }
   };
-  
 
   return (
     <div>
@@ -88,14 +88,17 @@ export default function StepFinal({ formData, onSubmit, onBack }) {
       </div>
 
       <div style={{ marginTop: '1rem' }}>
+        <ReCAPTCHA
+          sitekey={SITE_KEY}
+          onChange={handleCaptchaChange}
+          ref={recaptchaRef}
+        />
+      </div>
+
+      <div style={{ marginTop: '1rem' }}>
         <button type="button" onClick={onBack}>Indietro</button>
         <button type="button" onClick={handleClick} style={{ marginLeft: '1rem' }}>Invia</button>
       </div>
-      <ReCAPTCHA
-          sitekey={SITE_KEY}
-          size="invisible"
-          ref={recaptchaRef}
-        />
     </div>
   );
 }
