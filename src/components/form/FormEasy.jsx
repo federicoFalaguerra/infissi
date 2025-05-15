@@ -34,12 +34,28 @@ export default function FormInfissiLineare() {
 
   const handleBack = () => setStepIndex(prev => prev - 1);
 
-  const handleFinalSubmit = (data) => {
-   // e.preventDefault();
+  const handleFinalSubmit = async (data) => {
     const finalData = { ...formData, ...data };
-    console.log("Dati finali raccolti:", finalData);
-    setIsSubmitted(true);
+    try {
+      const response = await fetch('/api/send.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(finalData),
+      });
+  
+      const result = await response.json();
+  
+      if (result.success) {
+        setIsSubmitted(true);  // Mostra messaggio di successo solo se mail inviata correttamente
+      } else {
+        alert('Errore nell\'invio del modulo, riprova più tardi.');
+        // Puoi anche impostare uno stato per mostrare un messaggio errore in pagina
+      }
+    } catch (error) {
+      alert('Errore di rete, controlla la connessione.');
+    }
   };
+  
 
   return (
     <div className="max-w-xl mx-auto p-6 bg-white shadow rounded-lg space-y-6 my-70">
