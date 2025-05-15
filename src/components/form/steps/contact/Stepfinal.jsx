@@ -19,13 +19,40 @@ export default function StepFinal({ formData, onSubmit, onBack }) {
     setLocalData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleClick = () => {
-    if (onSubmit && typeof onSubmit === 'function') {
-      onSubmit(localData);
-    } else {
-      console.error("onSubmit non è una funzione");
+  const handleClick = async () => {
+    if (!localData.nome || !localData.cognome || !localData.email) {
+      alert("Compila tutti i campi.");
+      return;
+    }
+  
+    try {
+      const response = await fetch("https://landing.infissieinfissi.it/api/send.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          ...formData,
+          ...localData
+        })
+      });
+  
+      const result = await response.json();
+  
+      if (result.success) {
+        alert("Email inviata con successo!");
+        if (onSubmit && typeof onSubmit === 'function') {
+          onSubmit(localData); // cambia stato a isSubmitted nel componente padre
+        }
+      } else {
+        alert("Errore: " + (result.message || "Invio fallito."));
+      }
+    } catch (error) {
+      alert("Si è verificato un errore: " + error.message);
+      console.error(error);
     }
   };
+  
 
   return (
     <div>
