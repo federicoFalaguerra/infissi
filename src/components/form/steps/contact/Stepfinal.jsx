@@ -3,8 +3,9 @@ import React, { useState, useEffect } from 'react';
 export default function StepFinal({ formData, onSubmit, onBack, setIsSubmitted }) {
   const [localData, setLocalData] = useState({
     nome: '',
-    cognome: '',
     email: '',
+    cap: '',
+    phone: '',
     // Campo honeypot - i bot lo compileranno, gli umani no
     website: ''
   });
@@ -79,18 +80,24 @@ export default function StepFinal({ formData, onSubmit, onBack, setIsSubmitted }
   };
 
   return (
-    <div className='space-y-6 bg-white mx-auto h-[500px] flex flex-col justify-between'>
+    <div className='space-y-6 bg-white mx-auto h-[450px] flex flex-col justify-between'>
       {/* Rimosso il tag form qui */}
+      
+      <div>
       <h2 className='text-2xl font-semibold text-gray-800 font-display'>Inserisci i tuoi dati per il preventivo
       </h2>
       <div className='mt-4'>
-        <input name="nome" value={localData.nome} onChange={handleChange} className='border-2 border-gray-200 rounded-lg p-2 bg-gray-50 hover:bg-gray-50 transition-colors duration-300 w-full font-display font-semibold' placeholder='Il tuo nome' required  />
-      </div>
-      <div className='mt-4'>
-        <input name="cognome" value={localData.cognome} onChange={handleChange} required className='border-2 border-gray-200 rounded-lg p-2 bg-gray-50 hover:bg-gray-50 transition-colors duration-300 w-full font-display font-semibold' placeholder='Il tuo cognome' />
-      </div>
-      <div className='mt-4'>
-        <input name="email" type="email" value={localData.email} onChange={handleChange} required className='border-2 border-gray-200 rounded-lg p-2 bg-gray-50 hover:bg-gray-50 transition-colors duration-300 w-full font-display font-semibold' placeholder='La tua Email' />
+          <input name="cap" value={localData.cap} onChange={handleChange} className='border-2 border-gray-200 rounded-lg p-2 bg-gray-50 hover:bg-gray-50 transition-colors duration-300 w-full font-display font-semibold' placeholder='Il tuo CAP' required  />
+        </div>
+        <div className='mt-4'>
+          <input name="nome" value={localData.nome} onChange={handleChange} className='border-2 border-gray-200 rounded-lg p-2 bg-gray-50 hover:bg-gray-50 transition-colors duration-300 w-full font-display font-semibold' placeholder='Il tuo Nome' required  />
+        </div>
+        <div className='mt-4'>
+          <input name="email" type="email" value={localData.email} onChange={handleChange} required className='border-2 border-gray-200 rounded-lg p-2 bg-gray-50 hover:bg-gray-50 transition-colors duration-300 w-full font-display font-semibold' placeholder='La tua Email' />
+        </div>
+        <div className='mt-4'>
+          <input name="phone" type="tel" value={localData.phone} onChange={handleChange} required className='border-2 border-gray-200 rounded-lg p-2 bg-gray-50 hover:bg-gray-50 transition-colors duration-300 w-full font-display font-semibold' placeholder='Il tuo numero di Telefono' />
+        </div>
       </div>
       
       {/* Campo honeypot nascosto con CSS */}
@@ -111,7 +118,7 @@ export default function StepFinal({ formData, onSubmit, onBack, setIsSubmitted }
         </div>
       )}
 
-      <div style={{ marginTop: '1rem' }}>
+      <div className='flex justify-between'>
         <button type="button" onClick={onBack} disabled={isSubmitting} className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 font-display font-semibold">Indietro</button>
         <button type="button" onClick={handleClick} disabled={isSubmitting}  className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition-colors font-display font-semibold">
           {isSubmitting ? "Invio in corso..." : "Invia"}

@@ -16,7 +16,7 @@ export default function StepInfissi({ onNext, onBack, formData }) {
   };
 
   return (
-    <div className="space-y-6 bg-white mx-auto h-[500px] flex flex-col justify-between">
+    <div className="space-y-6 bg-white mx-auto h-[450px] flex flex-col justify-between">
       <div className="flex flex-col gap-4">
         <h2 className='text-2xl font-semibold text-gray-800'>Di che servizio hai bisogno? </h2>
         {['Sostituzione finestre', 'Installazione nuove finestre (casa nuova)'].map((option) => (
@@ -38,15 +38,8 @@ export default function StepInfissi({ onNext, onBack, formData }) {
       </div>
 
 
-      <div className=" flex justify-between">
-        <button
-          type="button"
-          onClick={onBack}
-          className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 font-display font-semibold"
-        >
-          Indietro
-        </button>
-
+      <div className=" flex justify-end">
+       
         <button
           type="button"
           onClick={handleNext}

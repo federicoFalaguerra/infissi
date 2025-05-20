@@ -16,7 +16,7 @@ export default function StepInfissi({ onNext, onBack, formData }) {
   };
 
   return (
-    <div className="space-y-6 bg-white mx-auto h-[500px] flex flex-col justify-between">
+    <div className="space-y-6 bg-white mx-auto h-[450px] flex flex-col justify-between">
       <div className="flex flex-col gap-4">
         <h2 className='text-2xl font-semibold text-gray-800'>Tipo di proprietà</h2>
         {['Appartamento', 'Villa', 'Ufficio/Negozio', 'Altro'].map((option) => (
