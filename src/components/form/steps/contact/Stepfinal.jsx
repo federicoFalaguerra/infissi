@@ -28,7 +28,7 @@ export default function StepFinal({ formData, onSubmit, onBack, setIsSubmitted }
   const handleClick = async () => {
     setErrorMsg(null);
 
-    if (!localData.nome || !localData.cognome || !localData.email) {
+    if (!localData.nome || !localData.cap || !localData.email || !localData.phone) {
       setErrorMsg("Per favore, compila tutti i campi.");
       return;
     }
