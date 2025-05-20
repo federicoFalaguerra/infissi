@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Lottie from 'lottie-react';
-import successAnimation from '../assets/animations/success.json';
+import successAnimation from '../../assets/animations/success.json';
 
 import Stepinfissi2 from './steps/infissi/Step2.jsx';
 import Stepinfissi3 from './steps/infissi/Step3.jsx';
