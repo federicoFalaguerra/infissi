@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Player } from '@lottiefiles/react-lottie-player';
+import Success from '../assets/animations/success.lottie';
 
 import Stepinfissi2 from './steps/infissi/Step2.jsx';
 import Stepinfissi3 from './steps/infissi/Step3.jsx';
@@ -52,8 +54,7 @@ export default function FormInfissiLineare() {
 
       {isSubmitted ? (
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-green-600">Grazie per aver inviato il modulo!</h2>
-          <p className="mt-4">Ti ricontatteremo al più presto.</p>
+          <Success></Success>
         </div>
       ) : (
         <form onSubmit={(e) => e.preventDefault()}>
