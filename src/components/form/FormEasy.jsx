@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Player } from '@lottiefiles/react-lottie-player';
-import Success from '../assets/animations/success.lottie';
+import Lottie from 'lottie-react';
+import successAnimation from '../assets/animations/success.json';
 
 import Stepinfissi2 from './steps/infissi/Step2.jsx';
 import Stepinfissi3 from './steps/infissi/Step3.jsx';
@@ -54,7 +54,11 @@ export default function FormInfissiLineare() {
 
       {isSubmitted ? (
         <div className="text-center">
-          <Success></Success>
+          <Lottie 
+              animationData={successAnimation}
+              loop={false}
+              autoplay={true}
+            />
         </div>
       ) : (
         <form onSubmit={(e) => e.preventDefault()}>
