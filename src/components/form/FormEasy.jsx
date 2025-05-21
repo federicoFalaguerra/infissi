@@ -42,7 +42,7 @@ export default function FormInfissiLineare() {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-white shadow rounded-lg space-y-6 my-70">
+    <div className="max-w-xl mx-auto md:p-6 py-6 px-0 bg-white rounded-lg space-y-6">
       {!isSubmitted && (
         <div className="w-full bg-gray-200 rounded-full h-2">
           <div

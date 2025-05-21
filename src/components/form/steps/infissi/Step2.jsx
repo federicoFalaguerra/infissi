@@ -29,7 +29,7 @@ export default function StepInfissi({ onNext, onBack, formData }) {
               value={option}
               checked={servizio2 === option}
               onChange={() => {setServizio2(option); setError('');}}
-              className='w-5 h-5 accent-green-600'
+              className='w-5 h-5 accent-green-600 min-w-5 min-h-5'
             />
             <span className='text-lg text-gray-700 font-display font-semibold'>{option.charAt(0).toUpperCase() + option.slice(1)}</span>
           </label>

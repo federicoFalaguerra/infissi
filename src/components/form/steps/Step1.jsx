@@ -42,7 +42,7 @@ export default function Step1({ onNext, formData }) {
             value={id}
             checked={servizio === id}
             onChange={() => {setServizio(id);  setError('');}}
-            className="w-5 h-5 accent-green-600"
+            className="w-5 h-5 accent-green-600 min-w-5 min-h-5"
           />
           <span className="text-lg text-gray-700">{label}</span>
         </label>
