@@ -132,8 +132,8 @@ export default function StepFinal({ formData, onSubmit, onBack, setIsSubmitted }
       )}
 
       <div className='flex justify-between'>
-        <button type="button" onClick={onBack} disabled={isSubmitting} className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 font-display font-semibold">Indietro</button>
-        <button type="button" onClick={handleClick} disabled={isSubmitting}  className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition-colors font-display font-semibold">
+        <button type="button" onClick={onBack} disabled={isSubmitting} className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 font-display font-semibold hover:cursor-pointer">Indietro</button>
+        <button type="button" onClick={handleClick} disabled={isSubmitting}  className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition-colors font-display font-semibold hover:cursor-pointer">
           {isSubmitting ? "Invio in corso..." : "Invia"}
         </button>
       </div>
