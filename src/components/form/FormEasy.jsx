@@ -53,7 +53,7 @@ export default function FormInfissiLineare() {
       )}
 
       {isSubmitted ? (
-        <div className="text-center">
+        <div className="space-y-6 bg-white mx-auto h-[450px] flex flex-col justify-between">
           <Lottie 
               animationData={successAnimation}
               loop={false}

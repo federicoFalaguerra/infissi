@@ -90,13 +90,26 @@ export default function StepFinal({ formData, onSubmit, onBack, setIsSubmitted }
           <input name="cap" value={localData.cap} onChange={handleChange} className='border-2 border-gray-200 rounded-lg p-2 bg-gray-50 hover:bg-gray-50 transition-colors duration-300 w-full font-display font-semibold' placeholder='Il tuo CAP' required  />
         </div>
         <div className='mt-4'>
-          <input name="nome" value={localData.nome} onChange={handleChange} className='border-2 border-gray-200 rounded-lg p-2 bg-gray-50 hover:bg-gray-50 transition-colors duration-300 w-full font-display font-semibold' placeholder='Il tuo Nome' required  />
+          <input name="nome" value={localData.nome} onChange={handleChange} className='border-2 border-gray-200 rounded-lg p-2 bg-gray-50 hover:bg-gray-50 transition-colors duration-300 w-full font-display font-semibold' placeholder='Nome e Cognome' required  />
         </div>
         <div className='mt-4'>
-          <input name="email" type="email" value={localData.email} onChange={handleChange} required className='border-2 border-gray-200 rounded-lg p-2 bg-gray-50 hover:bg-gray-50 transition-colors duration-300 w-full font-display font-semibold' placeholder='La tua Email' />
+          <input name="email" type="email" value={localData.email} onChange={handleChange} required className='border-2 border-gray-200 rounded-lg p-2 bg-gray-50 hover:bg-gray-50 transition-colors duration-300 w-full font-display font-semibold' placeholder='Email' />
         </div>
         <div className='mt-4'>
-          <input name="phone" type="tel" value={localData.phone} onChange={handleChange} required className='border-2 border-gray-200 rounded-lg p-2 bg-gray-50 hover:bg-gray-50 transition-colors duration-300 w-full font-display font-semibold' placeholder='Il tuo numero di Telefono' />
+          <input name="phone" type="tel" value={localData.phone} onChange={handleChange} required className='border-2 border-gray-200 rounded-lg p-2 bg-gray-50 hover:bg-gray-50 transition-colors duration-300 w-full font-display font-semibold' placeholder='Telefono' />
+        </div>
+        <div className='mt-4 flex items-end gap-2'>
+          <input
+            type="checkbox"
+            id="privacyCheckbox"
+            name="privacyAccepted"
+            checked={localData.privacyAccepted}
+            required
+            className="mt-1 border-2 border-gray-200 rounded-lg w-5 h-5 accent-blue-600"
+          />
+          <label className="text-sm font-display font-semibold text-gray-700" htmlFor="privacyCheckbox">
+            Accetto Termini e Condizioni della <a href="https://www.iubenda.com/privacy-policy/34705857" target="_blank" className="text-blue-600 underline" id='privacyAccepted'>Privacy Policy</a>.
+          </label>
         </div>
       </div>
       
