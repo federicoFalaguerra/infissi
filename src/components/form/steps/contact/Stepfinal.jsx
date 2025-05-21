@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Check from '../../../../assets/icone/circle-check-solid.svg?url';
+import User from '../../../../assets/icone/user-lock-solid.svg?url';
 
 export default function StepFinal({ formData, onSubmit, onBack, setIsSubmitted }) {
   const [localData, setLocalData] = useState({
@@ -98,18 +100,26 @@ export default function StepFinal({ formData, onSubmit, onBack, setIsSubmitted }
         <div className='mt-4'>
           <input name="phone" type="tel" value={localData.phone} onChange={handleChange} required className='border-2 border-gray-200 rounded-lg p-2 bg-gray-50 hover:bg-gray-50 transition-colors duration-300 w-full font-display font-semibold' placeholder='Telefono' />
         </div>
-        <div className='mt-4 flex items-end gap-2'>
+        <div className='mt-4 flex items-end gap-2 w-full'>
           <input
             type="checkbox"
             id="privacyCheckbox"
             name="privacyAccepted"
-            checked={localData.privacyAccepted}
+            checked
             required
             className="mt-1 border-2 border-gray-200 rounded-lg w-5 h-5 accent-blue-600"
           />
-          <label className="text-sm font-display font-semibold text-gray-700" htmlFor="privacyCheckbox">
-            Accetto Termini e Condizioni della <a href="https://www.iubenda.com/privacy-policy/34705857" target="_blank" className="text-blue-600 underline" id='privacyAccepted'>Privacy Policy</a>.
+          <label className="text-sm font-display font-semibold text-gray-700 w-full flex" htmlFor="privacyCheckbox">
+            Accetto&nbsp;<span className='hidden md:block'>Termini e Condizioni della&nbsp;</span> <a href="https://www.iubenda.com/privacy-policy/34705857" target="_blank" className="text-blue-600 underline" id='privacyAccepted'> Privacy Policy</a>.
           </label>
+        </div>
+        <div className='flex lg:justify-around justify-around'>
+          <div className='mt-5 flex items-center flex-col md:flex-row justify-center'>
+            <img src={Check} className='w-4 h-4 mr-2'/><span className='font-display text-[12px] text-[#757373] font-semibold'>Servizio Gratuito</span>
+          </div>
+          <div className='mt-5 flex flex-col md:flex-row items-center'>
+            <img src={User} className='w-4 h-4 mr-2'/><span className='font-display text-[12px] text-[#757373] font-semibold'>Non cediamo i tuoi dati <span className='hidden md:block'>&nbsp;a terze parti</span></span>
+          </div>
         </div>
       </div>
       
