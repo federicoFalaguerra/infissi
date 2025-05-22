@@ -4,6 +4,8 @@ import google from '../assets/google.svg?url';
 import imgOpen from '../assets/infissieinfissi-apertura.webp?url';
 import imgOpen2 from '../assets/infissieinfissi-apertura2.webp?url';
 import imgOpen3 from '../assets/infissieinfissi-apertura3.webp?url';
+import imgMobile from '../assets/infissieinfissi-apertura-mobile.webp?url';
+
 
 
 import Bullets from '../components/Bullets.astro';
@@ -18,7 +20,12 @@ const dati = LandingData[citta];
     <img
       src={imgOpen3}
       alt="Sfondo"
-      class="absolute inset-0 w-full h-full object-cover z-0"
+      class="absolute inset-0 w-full h-full object-cover z-0 md:block hidden"
+    />
+    <img
+      src={imgMobile}
+      alt="Sfondo"
+      class="absolute inset-0 w-full h-full object-cover z-0 md:hidden block"
     />
   
     {/* Overlay identico al tuo linear-gradient */}
