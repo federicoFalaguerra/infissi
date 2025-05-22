@@ -118,7 +118,7 @@ export default function StepFinal({ formData, onSubmit, onBack, setIsSubmitted }
             <img src={Check} className='w-4 h-4 mr-2'/><span className='font-display text-[12px] text-[#757373] font-semibold'>Servizio Gratuito</span>
           </div>
           <div className='mt-5 flex flex-col md:flex-row items-center'>
-            <img src={User} className='w-4 h-4 mr-2'/><span className='font-display text-[12px] text-[#757373] font-semibold'>Non cediamo i tuoi dati <span className='hidden md:block'>&nbsp;a terze parti</span></span>
+            <img src={User} className='w-4 h-4 mr-2'/><span className='font-display text-[12px] text-[#757373] font-semibold flex'>Non cediamo i tuoi dati <span className='hidden md:block'>&nbsp;a terze parti</span></span>
           </div>
         </div>
       </div>
