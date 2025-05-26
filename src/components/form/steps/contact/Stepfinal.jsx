@@ -52,8 +52,6 @@ export default function StepFinal({ formData, onSubmit, onBack, setIsSubmitted }
 
     try {
       // Invio simultaneo a entrambi gli endpoint
-      console.log("Dati inviati a Zapier:", localData);
-
       const [emailResponse, zapierResponse] = await Promise.allSettled([
         // Invio al tuo endpoint per l'email
         fetch("https://landing.infissieinfissi.it/api/send.php", {
@@ -61,8 +59,8 @@ export default function StepFinal({ formData, onSubmit, onBack, setIsSubmitted }
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(localData)
         }),
-        // Invio a Zapier
-        fetch("https://hooks.zapier.com/hooks/catch/4503927/2jsg711/", {
+        // Invio al tuo proxy per Zapier invece che direttamente a Zapier
+        fetch("https://landing.infissieinfissi.it/api/proxy-zapier.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(localData)
@@ -72,19 +70,26 @@ export default function StepFinal({ formData, onSubmit, onBack, setIsSubmitted }
       // Gestisci la risposta dell'endpoint email
       let emailSuccess = false;
       if (emailResponse.status === 'fulfilled') {
-        const emailResult = await emailResponse.value.json();
-        console.log("Risposta da send.php:", emailResult);
-        emailSuccess = emailResult.success;
+        if (emailResponse.value.ok) {
+          const emailResult = await emailResponse.value.json();
+          console.log("Risposta da send.php:", emailResult);
+          emailSuccess = emailResult.success;
+        }
       } else {
         console.error("Errore invio email:", emailResponse.reason);
       }
 
-      // Gestisci la risposta di Zapier
+      // Gestisci la risposta del proxy Zapier
       let zapierSuccess = false;
       if (zapierResponse.status === 'fulfilled') {
-        // Zapier restituisce status 200 per successo
-        zapierSuccess = zapierResponse.value.ok;
-        console.log("Invio a Zapier:", zapierSuccess ? "Successo" : "Fallito");
+        if (zapierResponse.value.ok) {
+          const zapierResult = await zapierResponse.value.json();
+          console.log("Risposta da Zapier:", zapierResult);
+          zapierSuccess = zapierResult.success;
+        } else {
+          const errorResult = await zapierResponse.value.json();
+          console.error("Errore proxy Zapier:", errorResult);
+        }
       } else {
         console.error("Errore invio Zapier:", zapierResponse.reason);
       }
@@ -122,12 +127,9 @@ export default function StepFinal({ formData, onSubmit, onBack, setIsSubmitted }
 
   return (
     <div className='space-y-6 bg-white mx-auto h-[450px] flex flex-col justify-between'>
-      {/* Rimosso il tag form qui */}
-      
       <div>
-      <h2 className='text-2xl font-semibold text-gray-800 font-display'>Inserisci i tuoi dati per il preventivo
-      </h2>
-      <div className='mt-4'>
+        <h2 className='text-2xl font-semibold text-gray-800 font-display'>Inserisci i tuoi dati per il preventivo</h2>
+        <div className='mt-4'>
           <input name="cap" value={localData.cap} onChange={handleChange} className='border-2 border-gray-200 rounded-lg p-2 bg-gray-50 hover:bg-gray-50 transition-colors duration-300 w-full font-display font-semibold' placeholder='Il tuo CAP' required  />
         </div>
         <div className='mt-4'>
@@ -144,7 +146,7 @@ export default function StepFinal({ formData, onSubmit, onBack, setIsSubmitted }
             type="checkbox"
             id="privacyCheckbox"
             name="privacyAccepted"
-            checked
+            defaultChecked
             required
             className="mt-1 border-2 border-gray-200 rounded-lg w-5 h-5 accent-blue-600"
           />
