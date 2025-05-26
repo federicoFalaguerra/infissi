@@ -52,6 +52,8 @@ export default function StepFinal({ formData, onSubmit, onBack, setIsSubmitted }
 
     try {
       // Invio simultaneo a entrambi gli endpoint
+      console.log("Dati inviati a Zapier:", localData);
+
       const [emailResponse, zapierResponse] = await Promise.allSettled([
         // Invio al tuo endpoint per l'email
         fetch("https://landing.infissieinfissi.it/api/send.php", {
