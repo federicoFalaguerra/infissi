@@ -12,14 +12,14 @@ const Modal = ({ isOpen, onClose, children, className = '' }) => {
   // Previene lo scroll del body quando il modal è aperto
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflowY = 'hidden';
     } else {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflowY = 'auto';
     }
     
     // Cleanup quando il componente viene smontato
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflowY = 'auto';
     };
   }, [isOpen]);
 

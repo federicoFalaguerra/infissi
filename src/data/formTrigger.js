@@ -8,7 +8,7 @@ function initFormTriggers() {
     // Aggiungi l'event listener a ciascun pulsante
     ctaButtons.forEach(button => {
       button.addEventListener('click', function(e) {
-        console.log('cliccato')
+        //console.log('cliccato')
         e.preventDefault();
         
         // Emetti l'evento per aprire il modal
