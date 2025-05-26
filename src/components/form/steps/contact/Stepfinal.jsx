@@ -51,16 +51,44 @@ export default function StepFinal({ formData, onSubmit, onBack, setIsSubmitted }
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("https://landing.infissieinfissi.it/api/send.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(localData)
-      });
+      // Invio simultaneo a entrambi gli endpoint
+      const [emailResponse, zapierResponse] = await Promise.allSettled([
+        // Invio al tuo endpoint per l'email
+        fetch("https://landing.infissieinfissi.it/api/send.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(localData)
+        }),
+        // Invio a Zapier
+        fetch("https://hooks.zapier.com/hooks/catch/4503927/2jsg711/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(localData)
+        })
+      ]);
 
-      const result = await response.json();
-      console.log("Risposta da send.php:", result);
+      // Gestisci la risposta dell'endpoint email
+      let emailSuccess = false;
+      if (emailResponse.status === 'fulfilled') {
+        const emailResult = await emailResponse.value.json();
+        console.log("Risposta da send.php:", emailResult);
+        emailSuccess = emailResult.success;
+      } else {
+        console.error("Errore invio email:", emailResponse.reason);
+      }
 
-      if (result.success) {
+      // Gestisci la risposta di Zapier
+      let zapierSuccess = false;
+      if (zapierResponse.status === 'fulfilled') {
+        // Zapier restituisce status 200 per successo
+        zapierSuccess = zapierResponse.value.ok;
+        console.log("Invio a Zapier:", zapierSuccess ? "Successo" : "Fallito");
+      } else {
+        console.error("Errore invio Zapier:", zapierResponse.reason);
+      }
+
+      // Se almeno uno dei due invii è andato a buon fine, considera l'operazione riuscita
+      if (emailSuccess || zapierSuccess) {
         // Notifica il genitore che l'invio è avvenuto con successo
         if (onSubmit && typeof onSubmit === 'function') {
           onSubmit(localData);
@@ -70,12 +98,21 @@ export default function StepFinal({ formData, onSubmit, onBack, setIsSubmitted }
         if (setIsSubmitted && typeof setIsSubmitted === 'function') {
           setIsSubmitted(true);
         }
+
+        // Log per debugging
+        if (!emailSuccess) {
+          console.warn("Invio email fallito, ma Zapier è riuscito");
+        }
+        if (!zapierSuccess) {
+          console.warn("Invio Zapier fallito, ma email è riuscita");
+        }
       } else {
-        setErrorMsg(result.message || "Errore nell'invio del modulo, riprova più tardi.");
+        setErrorMsg("Errore nell'invio del modulo, riprova più tardi.");
       }
+
     } catch (error) {
       setErrorMsg("Errore di rete, controlla la connessione.");
-      console.error(error);
+      console.error("Errore generale:", error);
     }
 
     setIsSubmitting(false);
