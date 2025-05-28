@@ -1,0 +1,42 @@
+---
+import Header from '../components/Header.astro';
+import Open2 from '../components/Open2.astro';
+import Prodotti from '../components/Prodotti.astro';
+import ChiSiamo from '../components/Chi-siamo.astro';
+import Step from '../components/Step.astro';
+import Sticky from '../components/Sticky.astro';
+import Form from '../components/Form.astro';
+import "../styles/global.css";
+
+
+
+const { citta } = Astro.params;
+import LandingData from '../data/LandingData.js';
+
+const dati = LandingData[citta];
+
+
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+		<title>Infissi & Infissi {dati.nomeCitta}</title>
+	</head>
+	<body>
+	<Header></Header>
+	<Open2></Open2>
+	<Sticky></Sticky>
+	<Form></Form>
+	<script>
+		// Importa il file JavaScript
+		import '../data/formTrigger.js';
+	  </script>	</body>
+</html>

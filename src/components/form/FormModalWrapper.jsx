@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from '../ui/Modal';
 import FormInfissiLineare from './FormEasy.jsx'; // Il tuo form esistente
 
+
 /**
  * Wrapper che rende il form dentro un modal
  * Ascolta l'evento 'openFormModal' per aprire il modal

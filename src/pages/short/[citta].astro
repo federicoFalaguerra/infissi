@@ -1,0 +1,26 @@
+---
+import ShortLayout from '../../layouts/ShortLayout.astro';
+import LandingData from '../../data/LandingData.js';
+
+// Questa funzione deve restituire tutti i percorsi dinamici che vuoi generare
+export function getStaticPaths() {
+  // Ritorna un array di percorsi (città)
+  return Object.keys(LandingData).map((citta) => ({
+    params: { citta },
+  }));
+}
+
+
+const { citta } = Astro.params;
+const dati = LandingData[citta];
+
+if (!dati) {
+  throw new Error(`Città non trovata: ${citta}`);
+}
+
+---
+
+
+   <ShortLayout>
+   </ShortLayout>
+

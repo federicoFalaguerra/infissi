@@ -1,0 +1,59 @@
+---
+import LandingData from '../data/LandingData';
+import google from '../assets/google.svg?url';
+import imgOpen from '../assets/infissieinfissi-apertura.webp?url';
+import imgOpen2 from '../assets/infissieinfissi-apertura2.webp?url';
+import imgOpen3 from '../assets/infissieinfissi-apertura3.webp?url';
+import imgMobile from '../assets/infissieinfissi-apertura-mobile.webp?url';
+
+
+
+import Bullets from '../components/Bullets.astro';
+
+const { citta } = Astro.params;
+const dati = LandingData[citta];
+
+---
+
+<section class="relative flex items-center justify-center px-5 overflow-hidden md:py-5 pb-5 mb-30">
+    <img
+        src={imgOpen3}
+        alt="Sfondo"
+        class="absolute inset-0 w-full h-full object-cover z-0"
+        class="absolute inset-0 w-full h-full object-cover z-0 md:block hidden"
+    />
+    <img
+        src={imgMobile}
+        alt="Sfondo"
+        class="absolute inset-0 w-full h-full object-cover z-0 md:hidden block"
+     />
+  
+    <div
+      class="absolute inset-0 z-10"
+      style={{
+        background: `linear-gradient(to top, rgb(248 248 248), rgb(248 248 248 / 70%), rgb(248 248 248))`,
+      }}
+    ></div>
+  
+    <div class="relative z-20 container">
+      <h1 class="font-display text-center md:text-7xl text-5xl font-bold text-[#141414] tracking-[-1px] md:pt-16 pt-8 m-auto">
+        Vuoi sostituire i tuoi<br class="hidden lg:block" />
+        serramenti a <span class="text-[#D7212E]">{dati.nomeCitta}?</span>
+      </h1>
+      <p class="md:text-[20px] text-[18px] text-[#4F4F4F] text-center mt-6">
+        Dalla nostra fabbrica a casa tua.<br> I nostri serramenti a <span class="lowercase">{dati.nomeCitta}</span> sono senza costo di intermediari e con tutta la <strong>qualità Made in Italy</strong>
+      </p>
+      <div class="mt-8 text-center">
+        <button data-form-trigger class="btn-big btn-primary hover:cursor-pointer shadow">
+          Calcola preventivo gratuito
+        </button>
+      </div>
+      <div class="flex items-center justify-center mt-6">
+        <img src={google} alt="Recensioni Google 4,9" class="w-32" />
+        <span class="text-[16px] text-gray-500 font-display ml-2 font-semibold">4,9</span>
+        <span class="text-[16px] text-gray-500 font-display ml-4 font-semibold">1.217 Recensioni</span>
+      </div>
+      <Bullets />
+    </div>
+  </section>
+  
