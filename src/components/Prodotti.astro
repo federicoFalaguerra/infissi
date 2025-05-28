@@ -1,4 +1,6 @@
 ---
+import LandingData from '../data/LandingData';
+
 import Card from '../components/ui/Card.astro';
 
 import PVC from '../assets/prodotti/pvc.jpg?url';
@@ -8,12 +10,14 @@ import Zanzariere from '../assets/prodotti/zanzariera.jpg?url';
 import PorteBlindate from '../assets/prodotti/porte-blindate.jpg?url';
 import Vepa from '../assets/prodotti/vepa.jpg?url';
 
+const { citta } = Astro.params;
+const dati = LandingData[citta];
 
 ---
 
 <section class="flex items-center justify-center mt-16 px-5">
     <div class="container">
-        <h2 class="md:text-6xl text-5xl font-bold text-[#141414] text-center font-display">I prodotti <br><span class="text-[#D7212E]">Infissi & Infissi</span></h2>
+        <h2 class="md:text-6xl text-5xl font-bold text-[#141414] text-center font-display">I serramenti a <span class="lowercase">{dati.nomeCitta} </span> di<br><span class="text-[#D7212E]">Infissi & Infissi</span></h2>
         <div class="products flex justify-center gap-x-4 mt-10 flex-wrap gap-y-4 flex-col md:flex-row">
             <Card image={PVC} title="Infissi in PVC, alluminio e legno"></Card>
             <Card image={Tende} title="Tende"></Card>
