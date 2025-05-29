@@ -3,6 +3,11 @@ import Gruppo from '../assets/chi-siamo.webp?url'
 import Gruppo2 from '../assets/chi-siamo1.jpg?url'
 import Gruppo3 from '../assets/chi-siamo2.jpg?url'
 
+import LandingData from '../data/LandingData';
+
+const { citta } = Astro.params;
+const dati = LandingData[citta];
+
 
 ---
 
@@ -10,7 +15,7 @@ import Gruppo3 from '../assets/chi-siamo2.jpg?url'
     <div class="container w-7xl">
         <h2 class="md:text-6xl text-5xl font-bold text-[#141414] text-center font-display">Infissi & Infissi <br><span class="text-[#D7212E]">L'azienda</span></h2>
         <div class="flex gap-2.5 mt-10 items-center flex-col-reverse md:flex-row">
-            <p class="md:w-6/12 w-full text-[18px] bg-white p-8 font-display rounded-2xl text-[#4F4F4F]">Nata da un’idea di amici e colleghi, oggi <strong>Infissi & Infissi è operativa in Piemonte, Lombardia, Veneto, Emilia-Romagna e Trentino. </strong>
+            <p class="md:w-6/12 w-full text-[18px] bg-white p-8 font-display rounded-2xl text-[#4F4F4F]">Nata da un’idea di amici e colleghi, oggi <strong>Infissi & Infissi è operativa in tutto il Nord Italia e sostituisce i vecchi serramenti anche nella tua città a {dati.nomeCitta} </strong>
             <br><br>
             Con <strong></strong>oltre 300 persone in organico</strong>, il team vanta con orgoglio <strong>oltre 20.000 installazioni</strong> nelle case degli italiani e una fabbrica di 2000 mq da cui nascono gli inimitabili prodotti con&nbsp;tecnologia&nbsp;Thermo-struttura.<br><br>
             “Non abbiamo mai perso <strong>l’attenzione sui nostri clienti</strong> nella realizzazione di soluzioni personalizzate attraverso creatività e buon gusto, per una perfetta <strong>armonia tra gusto estetico, sicurezza e necessità strutturali.</strong> Selezioniamo costantemente le <strong>forniture migliori</strong> controllando quotidianamente le novità che offre il mercato”.
