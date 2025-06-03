@@ -9,7 +9,9 @@ export default function StepFinal({ formData, onSubmit, onBack, setIsSubmitted }
     cap: '',
     phone: '',
     // Campo honeypot - i bot lo compileranno, gli umani no
-    website: ''
+    website: '',
+    // Aggiungiamo l'URL della pagina
+    pageUrl: ''
   });
 
   const [errorMsg, setErrorMsg] = useState(null);
@@ -18,7 +20,9 @@ export default function StepFinal({ formData, onSubmit, onBack, setIsSubmitted }
   useEffect(() => {
     setLocalData(prev => ({
       ...prev,
-      ...formData
+      ...formData,
+      // Cattura l'URL corrente della pagina
+      pageUrl: window.location.href
     }));
   }, [formData]);
 
