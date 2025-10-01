@@ -1,48 +1,54 @@
-# Astro Starter Kit: Basics
+# 🏡 Infissi&Infissi
 
-```sh
-npm create astro@latest -- --template basics
-```
+**Demo Online:** https://landing.infissieinfissi.it/cremona/
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+Un progetto web performante e professionale, focalizzato sulla presentazione di prodotti e servizi nel settore degli infissi. Sviluppato come vetrina per il mio portfolio, dimostra l'abilità nell'uso di **architetture front-end ibride** per bilanciare velocità di caricamento e complessità di interazione.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+---
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+## ✨ Punti di Forza e Architettura Ibrida
 
-## 🚀 Project Structure
+Questo progetto eccelle nell'integrazione intelligente di tecnologie, sfruttando il meglio di ciascuna per raggiungere performance ottimali e un'esperienza utente ricca, implementando il pattern **Islands Architecture** di Astro.
 
-Inside of your Astro project, you'll see the following folders and files:
+### 🚀 Astro: Performance Estreme e SEO
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+Il sito principale (pagine statiche, schede prodotto, landing page) è gestito interamente da **Astro.js**, che garantisce:
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+* **Velocità Massima:** La maggior parte delle pagine caricano con **Zero JavaScript** inviato al browser.
+* **Ottimizzazione SEO:** Miglior punteggio Lighthouse possibile grazie al **Server-Side Rendering (SSR)** statico.
 
-## 🧞 Commands
+### ⚛️ React.js: Complessità di Stato Isolata
 
-All commands are run from the root of the project, from a terminal:
+La funzionalità più critica e complessa, il **Form a Step per il preventivo**, è stata intenzionalmente sviluppata in **React.js**.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+* **Gestione dello Stato (State Management):** React è la scelta ideale per la logica complessa richiesta da un form multi-step.
+* **Partial Hydration:** Il componente React viene **"idratato"** (attivato con il JS necessario) *solo* sulla porzione di pagina dove si trova il form, isolando la logica complessa e **non rallentando** il resto del sito statico.
 
-## 👀 Want to learn more?
+---
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## 🛠️ Stack Tecnologico Dettagliato
+
+Una panoramica delle tecnologie utilizzate, evidenziando il loro ruolo specifico nel progetto:
+
+| Tecnologia | Ruolo | Dettaglio Chiave per il Recruiter |
+
+| **Astro.js** | Base del Progetto (Routing, Struttura, Static Content) | Orchestrazione dell'architettura e hosting dei componenti React. |
+| **React.js** | Componente Interattivo (Form a Step) | Abilità nell'isolare e gestire logica complessa e stato utente. |
+| **JavaScript/TypeScript** | Linguaggio Principale | Linguaggio comune utilizzato per la logica di entrambi i framework. |
+| **Tailwind CSS** | Styling e Design System | Sviluppo rapido, design responsive e mantenimento di un codice CSS snello. |
+
+---
+
+## ⚙️ Istruzioni di Setup Locale
+
+Per esaminare la struttura del codice e avviare l'applicazione sulla tua macchina.
+
+### Prerequisiti
+
+È necessario avere installato **Node.js (versione 16 o superiore)**.
+
+### 1. Clonazione del Progetto
+
+```bash
+git clone https://github.com/federicoFalaguerra/infissi.git
+cd Infissi-Infissi
